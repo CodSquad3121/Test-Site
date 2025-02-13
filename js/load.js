@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     let progress = 0;
     const loadingProgress = document.querySelector(".loading-progress");
-    const loadingText = document.querySelector(".loading-text");
+    const loadScreen = document.getElementById("load-screen");
+const loadingText = document.querySelector(".loading-text");
+    let intervalId;
 
     // Wrap each letter in a span
     const text = loadingText.textContent;
@@ -15,13 +17,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
     function updateProgress() {
         if (progress < 100) {
-            progress += 2;
+            progress += 1;
             loadingProgress.style.width = progress + "%";
-            setTimeout(updateProgress, 50); // Adjust the speed of the loading bar here
         } else {
-            document.getElementById("load-screen").style.display = "none";
+            clearInterval(intervalId);
+            loadScreen.style.display = "none";
         }
     }
 
-    updateProgress();
+    function startProgress() {
+        intervalId = setInterval(updateProgress, 50); // Adjust the speed of the loading bar here
+    }
+
+    startProgress();
 });
