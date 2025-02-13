@@ -175,9 +175,7 @@ function moveDino(e){
         dinoImg.src = "./img/dino-duck.png";
         dino.height = 59;
         dino.y = boardHeight - dino.height;
-        dinoImg.onload = function() {
-            context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
-        }
+        context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
     }
 }
 
@@ -186,9 +184,7 @@ function standUpDino(e) {
         dinoImg.src = "./img/dino.png";
         dino.height = dinoHeight;
         dino.y = dinoY;
-        dinoImg.onload = function() {
-            context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
-        }
+        context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
     }
 }
 

@@ -4,11 +4,19 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Test Bar</title>
+        <title>Dino Game</title>
         <link rel="stylesheet" href="css/dino.css">
-        <script src="js/dino.js"></script>
+        <script src="js/dino.js" defer></script>
+        <script src="js/load.js"></script>
     </head>
     <body>
+        <div id="load-screen">
+            <div class="loading-text">Loading...</div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+        </div>
+
         <div class="navbar-container">
             <div class="navbar">
                 <ul>
@@ -28,6 +36,7 @@
                 <button id="startButton">Start</button>
                 <button id="resetButton">Reset</button>
             </div>
+            <h3>Use the arrow keys to control the dino</h3>
         </main>
     </body>
 </html>
