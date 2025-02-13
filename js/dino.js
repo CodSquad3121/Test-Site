@@ -98,6 +98,7 @@ function startGame() {
     // Remove existing event listener to prevent multiple game starts
     document.removeEventListener("keydown", moveDino);
     document.addEventListener("keydown", moveDino); //calls moveDino function below when key is pressed
+    document.addEventListener("keyup", standUpDino); //calls standUpDino function below when key is released
 }
 
 function resetGame() {
@@ -174,6 +175,17 @@ function moveDino(e){
         dinoImg.src = "./img/dino-duck.png";
         dino.height = 59;
         dino.y = boardHeight - dino.height;
+        dinoImg.onload = function() {
+            context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
+        }
+    }
+}
+
+function standUpDino(e) {
+    if (e.code == "ArrowDown") {
+        dinoImg.src = "./img/dino.png";
+        dino.height = dinoHeight;
+        dino.y = dinoY;
         dinoImg.onload = function() {
             context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
         }
