@@ -67,3 +67,35 @@ body {
     background-color: lightgrey; 
     border-bottom: 1px solid black;
 }
+
+/*Dino Game Buttons */
+.game-buttons {
+    text-align: center;
+    margin-top: 20px;
+}
+.game-buttons button {
+    display: inline-block;
+    margin: 0px 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: rgb(68, 68, 68);
+    color: rgb(255, 255, 255);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-shadow: #000000 2px 2px 2px;
+}
+.game-buttons button:hover {
+    background-color: #45a049;
+}
+
+#board {
+    display: block;
+    margin: 0 auto;
+    border: 1px solid #000;
+}
+
+main {
+    text-align: center;
+}

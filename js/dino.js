@@ -38,8 +38,10 @@ let velocity = -8; //cactus moving left speed
 let velocityY = 0; //dino jumping speed
 let gravity = 0.4; //dino falling speed, reduced for smoother jump
 
-let gameOver = false;
+let gameOver = true; // Start with game over to allow starting the game
 let score = 0; //default score
+let cactusInterval;
+let animationFrameId;
 
 window.onload = function() {  //loads board when window loaded
     board = document.getElementById("board");
@@ -70,16 +72,54 @@ window.onload = function() {  //loads board when window loaded
     cactus3Img = new Image();
     cactus3Img.src = "./img/cactus3.png";
 
-    requestAnimationFrame(update); //calls update function below
-    setInterval(placeCactus, 1000); //calls placeCactus function below (1000ms / 1sec)
+    startGame(); // Automatically start the game on page load
+    board.addEventListener("click", resetGame); // Add event listener to canvas for resetting the game
+}
+
+function startGame() {
+    if (!gameOver) {
+        return; // Prevent starting the game if it's already running
+    }
+    gameOver = false;
+    score = 0;
+    cactusArray = [];
+    velocityY = 0;
+    dino.y = dinoY;
+    dinoImg.src = "./img/dino.png";
+    if (cactusInterval) {
+        clearInterval(cactusInterval);
+    }
+    cactusInterval = setInterval(placeCactus, 1000); //calls placeCactus function below (1000ms / 1sec)
+    if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+    }
+    animationFrameId = requestAnimationFrame(update); //calls update function below
+
+    // Remove existing event listener to prevent multiple game starts
+    document.removeEventListener("keydown", moveDino);
     document.addEventListener("keydown", moveDino); //calls moveDino function below when key is pressed
 }
 
+function resetGame() {
+    gameOver = true; // Stop the current game loop
+    clearInterval(cactusInterval); // Stop the cactus placement
+    cancelAnimationFrame(animationFrameId); // Stop the animation frame
+    cactusArray = [];
+    velocityY = 0;
+    dino.y = dinoY;
+    dinoImg.src = "./img/dino.png";
+    context.clearRect(0, 0, boardWidth, boardHeight); // Clear the board
+    context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
+    score = 0;
+    startGame(); // Start the game again
+}
+
 function update() {
-    requestAnimationFrame(update);
-    if(gameOver) {
-        return;
-    } 
+    if (gameOver) {
+        return; // Stop the update loop if the game is over
+    }
+
+    animationFrameId = requestAnimationFrame(update);
 
     context.clearRect(0, 0, boardWidth, boardHeight); // Clear the board
 
@@ -100,13 +140,20 @@ function update() {
             dinoImg.onload = function() {
                 context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
             }
+            // Draw the score even when the game is over
+            context.fillStyle = "black";
+            context.font = "20px Courier";
+            context.fillText(score, 5, 20);
+            return; // Stop the update loop
         }
     }
 
     // Score
+    if (!gameOver) {
+        score++;
+    }
     context.fillStyle = "black"; // Corrected from fillsStyle to fillStyle
     context.font = "20px Courier";
-    score++;
     context.fillText(score, 5, 20);
 
     // Remove cacti that have moved off the screen
